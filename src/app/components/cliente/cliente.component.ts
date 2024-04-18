@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/Cliente';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -13,8 +14,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ClienteComponent {
     clientes:Cliente[] = [];
-   constructor(private clienteService:ClienteService) {
+  clientForm : FormGroup = new FormGroup({})
 
+   constructor(private clienteService:ClienteService, private formBuilder : FormBuilder) {
+    this.clientForm = this.formBuilder
 
   }
 
