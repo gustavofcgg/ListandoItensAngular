@@ -3,22 +3,27 @@ import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/Cliente';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cliente',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule ,ReactiveFormsModule],
   templateUrl: './cliente.component.html',
   styleUrl: './cliente.component.css'
 })
 export class ClienteComponent {
+  static generateRandomString(arg0: number): number {
+    throw new Error('Method not implemented.');
+  }
+
     clientes:Cliente[] = [];
   clientForm : FormGroup = new FormGroup({})
 
    constructor(private clienteService:ClienteService, private formBuilder : FormBuilder) {
     this.clientForm = this.formBuilder.group({
-      nome : ['', Validators.required]
+      nome : ['', Validators.required],
+      telefone : ['', Validators.required]
     })
   }
 
@@ -31,6 +36,7 @@ export class ClienteComponent {
       }
       this.clientForm.reset()
       this.clienteService.adicionar(clientNovo)
+      alert("Cadastro com sucesso!")
     }
 
   }
@@ -48,7 +54,10 @@ export class ClienteComponent {
   listar():void{
       this.clientes = this.clienteService.listar();
   }
-
+  remover(id: string):void {
+      this.clienteService.remover(id);
+      alert('Removido com sucesso!')
+    }
   ngOnInit():void{
     this.listar();
   }
